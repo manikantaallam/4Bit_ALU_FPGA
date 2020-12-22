@@ -1,4 +1,4 @@
--------------------------4 bit full adder------------------------------
+-------------------------4 bit full adder
 library IEEE;
 use IEEE.std_logic_1164.all;
 
