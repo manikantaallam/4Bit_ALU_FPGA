@@ -13,7 +13,7 @@ entity ROM_English_Equivalents is
         
 
         --Output for Seven Segments // Shall port map accordingly to the SSHandler component
-        CD_E_V_SS_out :out std_logic_vector(23 downto 0)  --dp,g,f,e,d,c,b,a --dp,g,f,e,d,c,b,a --dp,g,f,e,d,c,b,a        
+        Cur_D_E_V_SS_out :out std_logic_vector(23 downto 0)  --dp,g,f,e,d,c,b,a --dp,g,f,e,d,c,b,a --dp,g,f,e,d,c,b,a        
          
   );
 end ROM_English_Equivalents;
@@ -33,6 +33,6 @@ architecture struct of ROM_English_Equivalents is
 
 begin
 
-  CD_E_V_SS_out <= ROM_Data (Cur_D_St_E_Val);
+  Cur_D_E_V_SS_out <= ROM_Data (Cur_D_St_E_Val);
 
 end struct;
