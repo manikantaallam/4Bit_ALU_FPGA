@@ -34,7 +34,7 @@ architecture behaviour of SS_Handler is
   signal State : t_State;
 
 
-  --for test purpose
+ --for test purpose
  -- signal SegmentLEDs_1: std_logic_vector(7 downto 0) := ("11111001"); --1   --dp,g,f,e,d,c,b,a
  -- signal SegmentLEDs_2: std_logic_vector(7 downto 0) := ("00100100"); --8.  --dp,g,f,e,d,c,b,a
  -- signal SegmentLEDs_3: std_logic_vector(7 downto 0) := ("11111000"); --1   --dp,g,f,e,d,c,b,a
@@ -94,6 +94,7 @@ begin
       state <= SS1; 
       counter := 0;
     end if;
+    
     SegmentSel  <= "1ZZZ";
     SegmentLEDs <= SegmentLEDs_4;
     
