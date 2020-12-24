@@ -13,13 +13,14 @@ end DeBounce;
 architecture behav of DeBounce is
 
 --the below constants decide the working parameters.
-constant COUNT_MAX1 : integer := 400000; --Bounce time counting
-constant COUNT_MAX2 : integer := 50; -- Minimum assertion period of debounced assertion
+--constant COUNT_MAX1 : integer := 400000; --Bounce cycle counts || 20MHz 50ns cycle period   || 20ms Rejection time For Spartan3
+constant COUNT_MAX1 : integer   := 240096; --Bounce time counting  || 12MHz 83.3ns cycle period || 20ms Rejection time For lattice ice40-hx8k breakout board
+constant COUNT_MAX2 : integer   := 440096; -- Minimum assertion period of debounced assertion
 constant BTN_ACTIVE : std_logic := '1'; -- Active high assertion of of the button
 
 signal count : integer := 0;
 signal count2 : integer := 0;
-type state_type is (idle,wait_time,OP); --state machine
+type state_type is (idle,wait_time,OP,OP_wait); --state Signals
 signal state : state_type := idle;
 
 begin
@@ -40,6 +41,7 @@ begin
                 else
                     state <= idle; 
                 end if;
+
                 pulse_out <= '0';
 
 --Wait till the bounce time is fulfilled
@@ -48,8 +50,7 @@ begin
                 count <= 0;
                     if(button_in = BTN_ACTIVE) then
                     state <= OP;
-                    end if; 
-                 
+                    end if;                 
             else
                 count <= count + 1;
             end if;             
@@ -57,14 +58,19 @@ begin
 
 --Maintaining Valid Pulse for at least 50 Clock Cycles
               when OP => 
-              if count2 = COUNT_MAX2 then 
                 pulse_out <= '0';
                 count2<=0;
+                state <= OP_wait;
+              
+
+              when OP_wait =>
+                if count2 = COUNT_MAX2 then               
                 state <= idle; 
-              elsif count2<= COUNT_MAX2 then
-                pulse_out <= '1';
+                elsif count2 <= COUNT_MAX2 then
+                --pulse_out <= '1';
                 count2 <= count2 + 1;               
-              end if;  
+                end if;  
+
 
         end case;       
     end if;        
