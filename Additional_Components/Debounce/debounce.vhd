@@ -3,7 +3,7 @@ use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.NUMERIC_STD.ALL;
 
 entity DeBounce is
-    port(   Clock       : in std_logic;
+    port(       Clock   : in std_logic;
                 Reset   : in std_logic;
            button_in    : in std_logic;
            pulse_out    : out std_logic
@@ -13,9 +13,14 @@ end DeBounce;
 architecture behav of DeBounce is
 
 --the below constants decide the working parameters.
+
 --constant COUNT_MAX1 : integer := 400000; --Bounce cycle counts || 20MHz 50ns cycle period   || 20ms Rejection time For Spartan3
+--constant COUNT_MAX2 : integer := 800000; -- -- Wait after output assertion For Spartan3
+
+
 constant COUNT_MAX1 : integer   := 240096; --Bounce time counting  || 12MHz 83.3ns cycle period || 20ms Rejection time For lattice ice40-hx8k breakout board
-constant COUNT_MAX2 : integer   := 440096; -- Minimum assertion period of debounced assertion
+constant COUNT_MAX2 : integer   := 4440096; -- Wait after output assertion || For lattice ice40-hx8k breakout board
+
 constant BTN_ACTIVE : std_logic := '1'; -- Active high assertion of of the button
 
 signal count : integer := 0;
@@ -28,10 +33,10 @@ begin
 process(Reset,Clock)
 
 begin
-    if(Reset = '0') then
+    if(Reset = '1') then
         state <= idle;
         pulse_out <= '0';
-   elsif(rising_edge(Clock)) then
+   elsif(falling_edge(Clock)) then
         case (state) is
 
 --wait until button is pressed
@@ -53,23 +58,21 @@ begin
                     end if;                 
             else
                 count <= count + 1;
-            end if;             
-   
-
---Maintaining Valid Pulse for at least 50 Clock Cycles
-              when OP => 
-                pulse_out <= '0';
-                count2<=0;
-                state <= OP_wait;
+            end if; 
+--Assert pulse
+            when OP => 
+              pulse_out <= '1';
+              count2<=0;                
+              state <= OP_wait;
               
-
-              when OP_wait =>
-                if count2 = COUNT_MAX2 then               
-                state <= idle; 
-                elsif count2 <= COUNT_MAX2 then
-                --pulse_out <= '1';
-                count2 <= count2 + 1;               
-                end if;  
+--Wait for button to release after assertion
+            when OP_wait =>
+            pulse_out <= '0';
+              if count2 = COUNT_MAX2 then               
+              state <= idle; 
+              elsif count2 <= COUNT_MAX2 then            
+              count2 <= count2 + 1;               
+              end if;  
 
 
         end case;       
