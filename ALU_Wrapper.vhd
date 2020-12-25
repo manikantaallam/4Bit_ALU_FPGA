@@ -242,13 +242,13 @@ signal S_Inc       :std_logic:='0';
 signal S_Dec       :std_logic:='0';
 signal S_Set       :std_logic:='0';
 signal S_NextStage :std_logic:='0';
-signal S_o1_in                            : integer range 0 to 15 := 0;
+signal S_o1_in                            : integer range 0 to 15;-- := 0;
 signal S_Stage1_curr_o1                   : integer range 0 to 15 := 0;    
-signal S_o2_in                            : integer range 0 to 15 := 0;
+signal S_o2_in                            : integer range 0 to 15;-- := 0;
 signal S_Stage2_curr_o2                   : integer range 0 to 15 := 0;   
-signal S_oPC_in                           : integer range 0 to 7 := 0;
+signal S_oPC_in                           : integer range 0 to 7;-- := 0;
 signal S_Stage3_curr_oPC                  : integer range 0 to 7 := 0;   
-signal S_Set_CU                           : std_logic:= '0'; 
+signal S_Set_CU                           : std_logic;--:= '0'; 
 signal S_Current_Display_Value_Selector   : std_logic_vector(1 downto 0):= (others =>'0');
 signal S_Cur_D_St_E_Val                   : integer range 0 to 3 := 0;
 signal S_Sel_SS_Assigner                  : std_logic_vector(1 downto 0):= (others =>'0');
@@ -257,10 +257,10 @@ signal S_Sel_SS_Assigner                  : std_logic_vector(1 downto 0):= (othe
 --attribute syn_preserve of S_Current_Display_Value_Selector : signal is true;
 
 --Local Signals for ALU
-signal S_ALU_o1_in   : std_logic_vector(3 downto 0):= (others =>'0');
-signal S_ALU_o2_in   : std_logic_vector(3 downto 0):= (others =>'0');
-signal S_ALU_oPC     : std_logic_vector(2 downto 0):= (others =>'0');
-signal S_ALU_ALU_Out : std_logic_vector(7 downto 0):= (others =>'0');
+signal S_ALU_o1_in   : std_logic_vector(3 downto 0);--:= (others =>'0');
+signal S_ALU_o2_in   : std_logic_vector(3 downto 0);--:= (others =>'0');
+signal S_ALU_oPC     : std_logic_vector(2 downto 0);--:= (others =>'0');
+signal S_ALU_ALU_Out : std_logic_vector(7 downto 0);--:= (others =>'0');
 
 
 --Local Signals for Current_Disp_State

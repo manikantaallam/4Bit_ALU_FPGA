@@ -27,10 +27,10 @@ process(Clk,Reset,Set,Data_in)
 begin
 	if (reset = '1') then
 		temp_data <= "000";
-	elsif(rising_edge(Clk)) then 
-		if (Set ='1') then
+	elsif (Set ='1') then	
+			if(rising_edge(Clk)) then 		
 			temp_data <= std_logic_vector(to_unsigned (Data_in,Data_out'length));
-		end if;
+			end if;
 	end if;
 end process;
 

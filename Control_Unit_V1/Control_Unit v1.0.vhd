@@ -53,7 +53,7 @@ end Control_Unit;
 architecture behaviour of Control_Unit is
 
   -- Enumerated type declaration and state signal declaration
-   type t_State is (Stage1, Stage2, Stage3, Stage4);
+   type t_State is (Stage1, Stage2, Stage3, Stage3_1, Stage4);
   
   --Signal Declaration  
   signal State : t_State;
@@ -166,15 +166,20 @@ When Stage3 =>         --For Operator Selection and Setting
 
 
 --Next State Logic and wait for ALU to do Operations
-       if NextStage = '1' and counter < 20 then 
-         counter :=  counter + 1;
-         state <= Stage3;
-       elsif counter >= 20 then
-         state <= Stage4;
-         counter := 0;
-       end if;
+       if NextStage = '1' then
+         state <= Stage3_1;
+      else
+      state <= Stage3;
+      end if;
 
-
+when Stage3_1 =>
+      if counter < 20 then 
+      counter :=  counter + 1;
+      state <= Stage3_1;
+      elsif counter = 20 then
+      state <= Stage4;
+      counter := 0;
+      end if;
 
 When Stage4 =>           --For Output Displaying
        Current_Display_Value_Selector <= "11";
@@ -211,11 +216,11 @@ Stage3_curr_oPC <= Stage3_curr_oPC_S;
 
 --Combinational Assignments
 -- For registering operand1 to ALU
-o1_in <= Stage1_curr_o1_S when   (Set =  '1' and State <= Stage1 )   else 0;
+o1_in <= Stage1_curr_o1_S; --when   (Set =  '1' and State <= Stage1 )   else 0;
 -- For registering operand2 to ALU
-o2_in <= Stage2_curr_o2_S  when  (Set =  '1' and State <= Stage2 )   else 0;
+o2_in <= Stage2_curr_o2_S;  --when  (Set =  '1' and State <= Stage2 )   else 0;
 -- For registering oP Code to ALU
-oPC_in <= Stage3_curr_oPC_S when (Set =  '1' and State <= Stage3)    else 0;
+oPC_in <= Stage3_curr_oPC_S; --when (Set =  '1' and State <= Stage3)    else 0;
 
 
 

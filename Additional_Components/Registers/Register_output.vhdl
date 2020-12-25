@@ -27,8 +27,8 @@ process(Clk,Reset,Set_CU,Data_in)
 begin
 	if (reset = '1') then
 		temp_out <= 0;
-	elsif(rising_edge(Clk)) then 
-		if (Set_CU ='1') then
+	elsif (Set_CU ='1') then
+	if(rising_edge(Clk)) then		
 			temp_out <= to_integer(unsigned (Data_in));
 		end if;
 	end if;
