@@ -42,7 +42,7 @@ architecture behaviour of SS_Handler is
 begin
 process(clk)
 
-variable counter : integer range 0 to 240000 := 0;
+variable counter : integer range 0 to 240000 := 0; --Counter for Display Refresh Rate
 
 begin
   
