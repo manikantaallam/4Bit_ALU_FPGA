@@ -31,7 +31,7 @@ begin
 
 B_int	<=to_integer(unsigned(B));
 
-process(clk,sel,reset)
+process(clk,sel,reset,A,B)
 begin 
 
 if reset = '1' then

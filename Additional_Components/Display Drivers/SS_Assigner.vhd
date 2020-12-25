@@ -29,14 +29,14 @@ begin
     case Sel_SS_Assigner is 
 
         when  "00"   =>   
-            SegmentLEDs_1 <= Cur_D_Val_SS_out(23 downto 16);
-            SegmentLEDs_2 <= Cur_D_Val_SS_out(15 downto 8);
+            SegmentLEDs_1 <= Cur_D_Val_SS_out(15 downto 8);
+            SegmentLEDs_2 <= Cur_D_Val_SS_out(23 downto 16);
             SegmentLEDs_3 <= Cur_D_E_Val_SS_out(15 downto 8);
             SegmentLEDs_4 <= Cur_D_E_Val_SS_out(23 downto 16);
 
         when  "01"   =>   
-            SegmentLEDs_1 <= Cur_D_Val_SS_out(23 downto 16);
-            SegmentLEDs_2 <= Cur_D_Val_SS_out(15 downto 8);
+            SegmentLEDs_1 <= Cur_D_Val_SS_out(15 downto 8);
+            SegmentLEDs_2 <= Cur_D_Val_SS_out(23 downto 16);
             SegmentLEDs_3 <= Cur_D_E_Val_SS_out(15 downto 8);
             SegmentLEDs_4 <= Cur_D_E_Val_SS_out(23 downto 16);
 

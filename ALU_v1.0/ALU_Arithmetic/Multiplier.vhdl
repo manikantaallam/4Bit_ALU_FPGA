@@ -25,7 +25,7 @@ begin
 
 A_S <= "0000"& A;
 
-Mult : process( clk,A,B,Reset )
+Mult : process( clk,A,B,Reset,Sel)
 
 variable counter :integer range 0 to 15 :=0;
 variable Bint    :integer range 0 to 15;
@@ -43,13 +43,19 @@ if Reset = '1' then
     A_Var     := (others=>'0');
 
 elsif sel = "111" then
+      if rising_edge(clk) then
         if counter = Bint then
             --counter := 0;
            Y_s <= A_var;
-        elsif rising_edge(clk) and counter < Bint  then
+        elsif counter < Bint  then
           A_var := A_var + A_S;
           counter := counter+1;
-        end if;  
+        end if;
+      end if;
+elsif (sel /= "111") then
+  Y_s       <= (others=>'0');
+  A_Var     := (others=>'0');
+  counter    := 0;
 end if;
 
 Y_Mult <= Y_s;    
@@ -59,4 +65,3 @@ end process ; -- identifier
 
 
 end behavioral; -- arch
-

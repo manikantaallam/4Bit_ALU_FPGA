@@ -42,7 +42,7 @@ architecture behaviour of SS_Handler is
 begin
 process(clk)
 
-variable counter : integer range 0 to 8000 := 0;
+variable counter : integer range 0 to 16000 := 0;
 
 begin
   
@@ -51,10 +51,10 @@ begin
     case State is
 
     when SS1 => 
-    if rising_edge(clk) and counter < 2000 then 
+    if rising_edge(clk) and counter < 4000 then 
     state <= SS1;
     counter := counter + 1;
-    elsif counter = 2000 then
+    elsif counter = 4000 then
     state <= SS2; 
     end if;
 
@@ -63,10 +63,10 @@ begin
     
 
     When SS2 =>
-    if rising_edge(clk) and counter < 4000 then 
+    if rising_edge(clk) and counter < 8000 then 
     state <= SS2;
     counter := counter + 1;
-    elsif counter = 4000 then
+    elsif counter = 8000 then
     state <= SS3; 
     end if;
 
@@ -75,10 +75,10 @@ begin
     
     
     When SS3 =>
-    if rising_edge(clk) and counter < 6000 then 
+    if rising_edge(clk) and counter < 12000 then 
     state <= SS3;
     counter := counter + 1;
-    elsif counter = 6000 then
+    elsif counter = 12000 then
       state <= SS4; 
     end if;
 
@@ -87,10 +87,10 @@ begin
    
 
     When SS4 =>
-    if rising_edge(clk) and counter < 8000 then 
+    if rising_edge(clk) and counter < 16000 then 
     state <= SS4;
     counter := counter + 1;
-    elsif counter = 8000 then
+    elsif counter = 16000 then
       state <= SS1; 
       counter := 0;
     end if;

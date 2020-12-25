@@ -2,6 +2,9 @@ library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 use IEEE.STD_LOGIC_UNSIGNED.ALL;
+--library synplify;
+---use synplify.attributes.all;
+
 
 
 entity ALU_Wrapper is
@@ -28,7 +31,7 @@ architecture Structural of ALU_Wrapper is
 --Components  
 --Debounce
 component DeBounce is
-  port(       Clock   : in std_logic;
+  port(       Clk   : in std_logic;
               Reset   : in std_logic;
          button_in    : in std_logic;
          pulse_out    : out std_logic
@@ -89,6 +92,8 @@ Component Register_Component is
     --Outputs
       Data_out:out std_logic_vector(3 downto 0));
   end Component;
+  --attribute syn_noprune : boolean;
+  --attribute syn_noprune of Register_Component: component is true;
 
 ----Register oPC
 Component Register_oPC is
@@ -103,6 +108,9 @@ Component Register_oPC is
     --Outputs
       Data_out:out std_logic_vector(2 downto 0));
   end Component;
+  --attribute syn_noprune : boolean;
+  --attribute syn_noprune of Register_oPC: component is true;
+
 
 ----Register Output
 Component Register_output is
@@ -117,7 +125,8 @@ Component Register_output is
     --Outputs
       Data_out:out integer range 0 to 225);
   end Component;
-
+  --attribute syn_noprune : boolean;
+  --attribute syn_noprune of Register_output: component is true;
 
 
 --ALU
@@ -130,8 +139,10 @@ Component ALU is
           oPC     :in std_logic_vector(2 downto 0);
           ALU_Out :out std_logic_vector(7 downto 0));
   end Component;
+  --attribute syn_noprune : boolean;
+  --attribute syn_noprune of ALU: component is true;
 
---Current Display State
+---Current Display State
 Component Current_Disp_State is
   port(
     --Inputs
@@ -146,6 +157,8 @@ Component Current_Disp_State is
        Current_Display_Output          	  :out integer range 0 to 255 
        );
   end Component;
+  ---attribute syn_noprune : boolean;
+  --attribute syn_noprune of Current_Disp_State: component is true;
 
 --ROMs
 ----Decimal Equ. ROM
@@ -225,49 +238,46 @@ end Component;
 
 
 --Local Signals for Control Unit
-signal S_Inc       :std_logic;
-signal S_Dec       :std_logic;
-signal S_Set       :std_logic;
-signal S_NextStage :std_logic;
-signal S_o1_in                            : integer range 0 to 15;
-signal S_Stage1_curr_o1                   : integer range 0 to 15;    
-signal S_o2_in                            : integer range 0 to 15;
-signal S_Stage2_curr_o2                   : integer range 0 to 15;   
-signal S_oPC_in                           : integer range 0 to 7;
-signal S_Stage3_curr_oPC                  : integer range 0 to 7;   
-signal S_Set_CU                           : std_logic; 
-signal S_Current_Display_Value_Selector   : std_logic_vector(1 downto 0);
-signal S_Cur_D_St_E_Val                   : integer range 0 to 3;
-signal S_Sel_SS_Assigner                  : std_logic_vector(1 downto 0);
+signal S_Inc       :std_logic:='0';
+signal S_Dec       :std_logic:='0';
+signal S_Set       :std_logic:='0';
+signal S_NextStage :std_logic:='0';
+signal S_o1_in                            : integer range 0 to 15 := 0;
+signal S_Stage1_curr_o1                   : integer range 0 to 15 := 0;    
+signal S_o2_in                            : integer range 0 to 15 := 0;
+signal S_Stage2_curr_o2                   : integer range 0 to 15 := 0;   
+signal S_oPC_in                           : integer range 0 to 7 := 0;
+signal S_Stage3_curr_oPC                  : integer range 0 to 7 := 0;   
+signal S_Set_CU                           : std_logic:= '0'; 
+signal S_Current_Display_Value_Selector   : std_logic_vector(1 downto 0):= (others =>'0');
+signal S_Cur_D_St_E_Val                   : integer range 0 to 3 := 0;
+signal S_Sel_SS_Assigner                  : std_logic_vector(1 downto 0):= (others =>'0');
+
+--attribute syn_preserve : boolean;
+--attribute syn_preserve of S_Current_Display_Value_Selector : signal is true;
 
 --Local Signals for ALU
-signal S_ALU_o1_in   : std_logic_vector(3 downto 0);
-signal S_ALU_o2_in   : std_logic_vector(3 downto 0);
-signal S_ALU_oPC     : std_logic_vector(2 downto 0);
-signal S_ALU_ALU_Out : std_logic_vector(7 downto 0);
+signal S_ALU_o1_in   : std_logic_vector(3 downto 0):= (others =>'0');
+signal S_ALU_o2_in   : std_logic_vector(3 downto 0):= (others =>'0');
+signal S_ALU_oPC     : std_logic_vector(2 downto 0):= (others =>'0');
+signal S_ALU_ALU_Out : std_logic_vector(7 downto 0):= (others =>'0');
 
 
 --Local Signals for Current_Disp_State
-signal S_CDS_Stage1_curr_o1		                  :integer range 0 to 15;
-signal S_CDS_Stage2_curr_o2 	                  :integer range 0 to 15;
-signal S_CDS_Stage3_curr_oPC 	                  :integer range 0 to 7;
-signal S_CDS_ALU_out         	                  :integer range 0 to 255;
-signal S_CDS_Current_Display_Selector         	:std_logic_vector(1 downto 0);
-signal S_CDS_Current_Display_Output          	  :integer range 0 to 255;
+signal S_CDS_ALU_out         	                  :integer range 0 to 255:= 0;
+signal S_CDS_Current_Display_Output          	  :integer range 0 to 255:= 0;
 
---Local Signals for ROM decimal Equivalent
-signal S_RDE_Cur_D_Val_Out    :integer range 0 to 255;  
-signal S_RDE_Cur_D_Val_SS_out :std_logic_vector(23 downto 0); 
+--Local Signals for ROM decimal Equivalent 
+signal S_RDE_Cur_D_Val_SS_out :std_logic_vector(23 downto 0):= (others =>'0'); 
 
 --Local Signals for ROM English Equivalent
-signal S_REE_Cur_D_St_E_Val   :integer range 0 to 3; 
-signal S_REE_Cur_D_E_V_SS_out :std_logic_vector(23 downto 0);  
+signal S_REE_Cur_D_E_V_SS_out :std_logic_vector(23 downto 0):= (others =>'0');  
 
 --Local Signals for SS Assigner
-signal S_SSA_SegmentLEDs_1        : std_logic_vector(7 downto 0);   
-signal S_SSA_SegmentLEDs_2        : std_logic_vector(7 downto 0);   
-signal S_SSA_SegmentLEDs_3        : std_logic_vector(7 downto 0);   
-signal S_SSA_SegmentLEDs_4        : std_logic_vector(7 downto 0);    
+signal S_SSA_SegmentLEDs_1        : std_logic_vector(7 downto 0);--:= (others =>'0');   
+signal S_SSA_SegmentLEDs_2        : std_logic_vector(7 downto 0);--:= (others =>'0');   
+signal S_SSA_SegmentLEDs_3        : std_logic_vector(7 downto 0);--:= (others =>'0');   
+signal S_SSA_SegmentLEDs_4        : std_logic_vector(7 downto 0);--:= (others =>'0');    
 
 
 
@@ -295,11 +305,11 @@ ALUv1:ALU port map(clk,Reset,S_ALU_o1_in,S_ALU_o2_in,S_ALU_oPC,S_ALU_ALU_Out);
 
 
 --Current Display State | Display Driver
-CDState:Current_Disp_State port map(S_CDS_Stage1_curr_o1,S_CDS_Stage2_curr_o2,S_CDS_Stage3_curr_oPC,S_CDS_ALU_out,S_CDS_Current_Display_Selector,S_CDS_Current_Display_Output);
+CDState:Current_Disp_State port map(S_Stage1_curr_o1, S_Stage2_curr_o2, S_Stage3_curr_oPC, S_CDS_ALU_out, S_Current_Display_Value_Selector, S_CDS_Current_Display_Output);
 
 --ROM Decimal Equivalent
-ROM_D_E:ROM_Decimal_Equivalents port map(S_RDE_Cur_D_Val_Out,S_RDE_Cur_D_Val_SS_out);
-ROM_E_E:ROM_English_Equivalents port map(S_REE_Cur_D_St_E_Val,S_REE_Cur_D_E_V_SS_out);
+ROM_D_E:ROM_Decimal_Equivalents port map(S_CDS_Current_Display_Output, S_RDE_Cur_D_Val_SS_out);
+ROM_E_E:ROM_English_Equivalents port map(S_Cur_D_St_E_Val, S_REE_Cur_D_E_V_SS_out);
 
 --SS Assigner
 SSA:SS_Assigner port map(S_RDE_Cur_D_Val_SS_out, S_REE_Cur_D_E_V_SS_out, S_Sel_SS_Assigner, S_SSA_SegmentLEDs_1, S_SSA_SegmentLEDs_2, S_SSA_SegmentLEDs_3, S_SSA_SegmentLEDs_4);

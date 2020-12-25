@@ -3,7 +3,7 @@ use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.NUMERIC_STD.ALL;
 
 entity DeBounce is
-    port(       Clock   : in std_logic;
+    port(       Clk   : in std_logic;
                 Reset   : in std_logic;
            button_in    : in std_logic;
            pulse_out    : out std_logic
@@ -19,24 +19,25 @@ architecture behav of DeBounce is
 
 
 constant COUNT_MAX1 : integer   := 240096; --Bounce time counting  || 12MHz 83.3ns cycle period || 20ms Rejection time For lattice ice40-hx8k breakout board
-constant COUNT_MAX2 : integer   := 4440096; -- Wait after output assertion || For lattice ice40-hx8k breakout board
+constant COUNT_MAX2 : integer   := 1540096; -- Wait after output assertion || For lattice ice40-hx8k breakout board
 
 constant BTN_ACTIVE : std_logic := '1'; -- Active high assertion of of the button
 
 signal count : integer := 0;
 signal count2 : integer := 0;
 type state_type is (idle,wait_time,OP,OP_wait); --state Signals
-signal state : state_type := idle;
+signal state : state_type;
 
 begin
   
-process(Reset,Clock)
+process(Reset,Clk)
 
 begin
     if(Reset = '1') then
         state <= idle;
         pulse_out <= '0';
-   elsif(falling_edge(Clock)) then
+   elsif(falling_edge(Clk)) then
+
         case (state) is
 
 --wait until button is pressed

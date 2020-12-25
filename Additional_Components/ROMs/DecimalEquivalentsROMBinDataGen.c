@@ -21,7 +21,7 @@ for (int i=0; i<=255; i++)
 
 if (i == 0)
 {
-  printf(" \"11000000ZZZZZZZZZZZZZZZZ");  
+  printf(" \"110000001111111111111111");  
 }
 
 
@@ -29,7 +29,7 @@ if (i > 0 )
   if (i <10 )
   {
 {
-  printf("ZZZZZZZZZZZZZZZZ");  
+  printf("1111111111111111");  
 }}
 
 
@@ -37,7 +37,7 @@ if (i > 9)
 {
 if (i < 100 )
 {
-  printf("ZZZZZZZZ");  
+  printf("11111111");  
 }
 }
 printf("\" ,  "); 

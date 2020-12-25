@@ -24,10 +24,10 @@ architecture struct of ROM_English_Equivalents is
   type ROM is Array (0 to 3) of std_logic_vector(23 downto 0);  
   signal ROM_Data :ROM := (
       
-    "1111100110100011ZZZZZZZZ" ,   --o1   (--1oZ)
-    "1010010010100011ZZZZZZZZ" ,   --o2   (--2oZ)
+    "111110011010001111111111" ,   --o1   (--1oZ)
+    "101001001010001111111111" ,   --o2   (--2oZ)
     "110001101000110010100011" ,   --oPC  (--CPo)
-    "00100011ZZZZZZZZZZZZZZZZ"     --o.   (--o.ZZ)    
+    "001000111111111111111111"     --o.   (--o.ZZ)    
 
   );
 

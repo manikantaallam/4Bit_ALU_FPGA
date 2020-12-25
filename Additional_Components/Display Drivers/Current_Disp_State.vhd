@@ -22,7 +22,7 @@ end entity;
 architecture arch of Current_Disp_State is
 begin
 
-  process(Stage1_curr_o1, Stage2_curr_o2, Stage3_curr_oPC, Current_Display_Selector)
+  process(Stage1_curr_o1, Stage2_curr_o2, Stage3_curr_oPC, ALU_out, Current_Display_Selector)
   begin
     case Current_Display_Selector is 
 
