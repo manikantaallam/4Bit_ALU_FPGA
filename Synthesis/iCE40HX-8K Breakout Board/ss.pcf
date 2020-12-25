@@ -4,7 +4,7 @@
 
 # Version:            2017.08.27940
 
-# File Generated:     Dec 25 2020 03:16:43
+# File Generated:     Dec 25 2020 23:21:53
 
 # Family & Device:    iCE40HX8K
 
@@ -15,7 +15,7 @@
 ###IOSet List 18
 set_io SegmentLEDs[1] G16
 set_io SegmentSel[2] E16
-set_io Reset H16 -io_std SB_LVCMOS -pullup no
+set_io Reset H16 -pullup no
 set_io SW4 P15 -pullup no
 set_io SegmentLEDs[2] F15
 set_io SegmentLEDs[6] K15
@@ -32,10 +32,9 @@ set_io SW3 P16 -pullup no
 set_io SegmentLEDs[5] K14
 set_io clk J3
 
-###ProDemote List 5
-demote_signal_unbuffered Switch1.N_222_0_g
-demote_signal_unbuffered Switch2.N_205_0_g
-demote_signal_unbuffered Switch3.N_188_0_g
-demote_signal_unbuffered Switch4.N_6_2_g
+###ProDemote List 4
 demote_signal_unbuffered ALUv1.Arithmetic.Mult.un3_sel_i_g
+demote_signal_unbuffered Switch1.N_211_0_g
+demote_signal_unbuffered Switch2.N_194_0_g
+demote_signal_unbuffered Switch4.N_6_1_g
 

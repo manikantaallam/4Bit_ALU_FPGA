@@ -1,8 +1,8 @@
 library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
-library synplify;
-use synplify.attributes.all;
+--library synplify;
+--use synplify.attributes.all;
 
 
 entity Control_Unit is
@@ -40,10 +40,10 @@ entity Control_Unit is
     Cur_D_St_E_Val                  :out integer range 0 to 3;
     Sel_SS_Assigner                 :out std_logic_vector(1 downto 0)
   );
-  attribute syn_preserve : boolean;
-  attribute syn_preserve of Sel_SS_Assigner : signal is true;
-  attribute syn_preserve : boolean;
-  attribute syn_preserve of Current_Display_Value_Selector : signal is true;
+  --attribute syn_preserve : boolean;
+  --attribute syn_preserve of Sel_SS_Assigner : signal is true;
+  --attribute syn_preserve : boolean;
+  --attribute syn_preserve of Current_Display_Value_Selector : signal is true;
 
 end Control_Unit;
 
@@ -51,7 +51,7 @@ end Control_Unit;
 
 
 architecture behaviour of Control_Unit is
-
+ 
   -- Enumerated type declaration and state signal declaration
    type t_State is (Stage1, Stage2, Stage3, Stage3_1, Stage4);
   
