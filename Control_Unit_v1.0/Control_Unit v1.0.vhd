@@ -66,7 +66,7 @@ signal Stage3_curr_oPC_S   :integer range 0 to 7  := 0;
 begin
 
 process(clk,Reset,Inc,Dec, NextStage)
-variable counter : integer range 0 to 25 := 0;
+variable counter : integer range 0 to 3 := 0;
 begin 
 
 if Reset = '1' then    -- Active High Asynchronous Reset
@@ -173,10 +173,10 @@ When Stage3 =>         --For Operator Selection and Setting
       end if;
 
 when Stage3_1 =>
-      if counter < 20 then 
+      if counter < 3 then 
       counter :=  counter + 1;
       state <= Stage3_1;
-      elsif counter = 20 then
+      elsif counter = 3 then
       state <= Stage4;
       counter := 0;
       end if;

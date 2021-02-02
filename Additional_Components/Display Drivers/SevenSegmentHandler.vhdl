@@ -58,7 +58,7 @@ begin
     state <= SS2; 
     end if;
 
-    SegmentSel  <= "ZZZ1";
+    SegmentSel  <= "0001";
     SegmentLEDs <=  SegmentLEDs_1;
     
 
@@ -70,7 +70,7 @@ begin
     state <= SS3; 
     end if;
 
-    SegmentSel  <= "ZZ1Z";
+    SegmentSel  <= "0010";
     SegmentLEDs <=  SegmentLEDs_2;
     
     
@@ -82,7 +82,7 @@ begin
       state <= SS4; 
     end if;
 
-    SegmentSel  <= "Z1ZZ";
+    SegmentSel  <= "0100";
     SegmentLEDs <=  SegmentLEDs_3;
    
 
@@ -95,7 +95,7 @@ begin
       counter := 0;
     end if;
     
-    SegmentSel  <= "1ZZZ";
+    SegmentSel  <= "1000";
     SegmentLEDs <= SegmentLEDs_4;
     
     

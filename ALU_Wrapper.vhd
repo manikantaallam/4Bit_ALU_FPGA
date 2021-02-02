@@ -295,9 +295,9 @@ Switch4:Debounce port map (clk, Reset, Sw4, S_NextStage);
 ControlUnit:Control_Unit port map(clk, Reset, S_Inc, S_Dec, S_Set, S_NextStage, S_o1_in, S_Stage1_curr_o1, S_o2_in, S_Stage2_curr_o2, S_oPC_in, S_Stage3_curr_oPC, S_Set_CU, S_Current_Display_Value_Selector, S_Cur_D_St_E_Val, S_Sel_SS_Assigner);
 
 --Registers
-Registero1  :Register_Component port map(Clk, Reset, SW3, S_o1_in, S_ALU_o1_in);
-Registero2  :Register_Component port map(Clk, Reset, SW3, S_o2_in, S_ALU_o2_in);
-RegisteroPC :Register_oPC       port map(Clk, Reset, SW3, S_oPC_in, S_ALU_oPC);
+Registero1  :Register_Component port map(Clk, Reset, S_Set, S_o1_in, S_ALU_o1_in);
+Registero2  :Register_Component port map(Clk, Reset, S_Set, S_o2_in, S_ALU_o2_in);
+RegisteroPC :Register_oPC       port map(Clk, Reset, S_Set, S_oPC_in, S_ALU_oPC);
 Registerout :Register_output    port map(clk, Reset, S_Set_CU, S_ALU_ALU_Out,S_CDS_ALU_out);
 
 --ALU
