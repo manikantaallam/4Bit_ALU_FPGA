@@ -16,5 +16,5 @@ OPC      Operations
 7  ----> Subtraction
 8  ----> Multiplication
 
-Synthesised and tested on: partan 3 series boards & Lattice ICE40-HX8K Breakout FPGA Boards
+Synthesised and tested on: Spartan-3 series board & Lattice ICE40-HX8K Breakout FPGA Board
   
